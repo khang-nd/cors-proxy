@@ -29,9 +29,7 @@ app.all('*', function (req, res, next) {
     request(
       { url: targetURL + req.url, method: req.method, qs: req.query },
       function (error) {
-        if (error) {
-          console.error('error: ' + error);
-        }
+        if (error) res.send(404, { error });
       }
     ).pipe(res);
   }
