@@ -28,9 +28,9 @@ app.all('*', function (req, res, next) {
     }
     request(
       { url: targetURL + req.url, method: req.method, qs: req.query },
-      function (error, response) {
+      function (error) {
         if (error) {
-          console.error('error: ' + response.statusCode);
+          console.error('error: ' + error);
         }
       }
     ).pipe(res);
