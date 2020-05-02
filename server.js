@@ -12,10 +12,8 @@ app.all('*', function (req, res, next) {
   // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, PATCH, POST, DELETE');
-  res.header(
-    'Access-Control-Allow-Headers',
-    req.header('access-control-request-headers')
-  );
+  res.header('Access-Control-Allow-Headers', req.header('access-control-request-headers'));
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
 
   if (req.method === 'OPTIONS') {
     // CORS Preflight
@@ -29,6 +27,7 @@ app.all('*', function (req, res, next) {
     request(
       { url: targetURL + req.url, method: req.method, qs: req.query },
       function (error) {
+        console.log('Requesting URL: ' + req.url);
         if (error) res.send(404, { error });
       }
     ).pipe(res);
