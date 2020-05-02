@@ -15,23 +15,18 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Headers', req.header('access-control-request-headers'));
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
 
-  if (req.method === 'OPTIONS') {
-    // CORS Preflight
-    res.send();
-  } else {
-    var targetURL = req.header('Target-URL');
-    if (!targetURL) {
-      res.send(500, { error: 'There is no Target-URL header in the request' });
-      return;
-    }
-    console.log('Requesting URL: ' + targetURL);
-    request(
-      { url: targetURL + req.url, method: req.method, qs: req.query },
-      function (error) {
-        if (error) res.send(404, { error });
-      }
-    ).pipe(res);
+  var targetURL = req.header('Target-URL');
+  if (!targetURL) {
+    res.send(500, { error: 'There is no Target-URL header in the request' });
+    return;
   }
+  console.log('Requesting URL: ' + targetURL);
+  request(
+    { url: targetURL + req.url, method: req.method, qs: req.query },
+    function (error) {
+      if (error) res.send(404, { error });
+    }
+  ).pipe(res);
 });
 
 app.set('port', process.env.PORT || 3000);
