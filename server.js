@@ -24,10 +24,10 @@ app.all('*', function (req, res, next) {
       res.send(500, { error: 'There is no Target-URL header in the request' });
       return;
     }
+    console.log('Requesting URL: ' + targetURL);
     request(
       { url: targetURL + req.url, method: req.method, qs: req.query },
       function (error) {
-        console.log('Requesting URL: ' + req.url);
         if (error) res.send(404, { error });
       }
     ).pipe(res);
