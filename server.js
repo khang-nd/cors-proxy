@@ -26,7 +26,7 @@ app.all('*', function (req, res, next) {
     }
     console.log('Requesting URL: ' + targetURL);
     request(
-      { url: targetURL + req.url, method: req.method, qs: req.query },
+      { url: targetURL, method: req.method, qs: req.query },
       function (error) {
         if (error) res.send(404, { error });
       }
