@@ -27,11 +27,9 @@ app.all('*', function (req, res, next) {
     console.info('Requesting URL: ' + targetURL);
     request(
       { url: targetURL, method: req.method, qs: req.query },
-      function (error) {
-        if (error) {
-          console.error(error);
-          res.send(404, { error });
-        }
+      function (error, response) {
+        console.log(error, response);
+        if (error) res.send(response ? response.statusCode : 404, { error });
       }
     ).pipe(res);
   }
